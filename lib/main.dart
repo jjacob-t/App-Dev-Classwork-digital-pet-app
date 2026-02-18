@@ -48,6 +48,30 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
     });
   }
 
+  Color _getColor() {
+    if (happinessLevel > 70) {
+      return Colors.green;
+    }
+    if (30 <= happinessLevel && happinessLevel <= 70) {
+      return Colors.yellow;
+    }
+    else {
+      return Colors.red;
+    }
+  }
+
+  Text _getMood(int happiness) {
+    if (happinessLevel > 70) {
+      return Text('Mood: Happy 😄', style: TextStyle(fontSize: 20.0));
+    }
+    if (30 <= happinessLevel && happinessLevel <= 70) {
+      return Text('Mood: Neutral 😐', style: TextStyle(fontSize: 20.0));
+    }
+    else {
+      return Text('Mood: Sad 😢', style: TextStyle(fontSize: 20.0));
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -57,15 +81,23 @@ class _DigitalPetAppState extends State<DigitalPetApp> {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
+          children: [
+            _getMood(happinessLevel),
+
             Container(
+              height: 150,
+              width: 150,
               decoration: BoxDecoration(
+                color: Colors.transparent,
                 image: DecorationImage(
-                  image: AssetImage('assets/pet_image.png'),
-                  fit: BoxFit.cover
-                )
-              )
+                  image: AssetImage('assets/images/pet_image.png'),
+                  fit: BoxFit.cover,
+                  colorFilter: ColorFilter.mode(
+                          _getColor().withOpacity(0.5), BlendMode.darken),
+                ),
+              ),
             ),
+
             Text('Name: $petName', style: TextStyle(fontSize: 20.0)),
             SizedBox(height: 16.0),
             Text('Happiness Level: $happinessLevel', style: TextStyle(fontSize: 20.0)),
